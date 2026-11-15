@@ -1,0 +1,9 @@
+Support — Airelay
+
+Connect both devices to the same Wi-Fi, keep Airelay open, and enter its displayed address in a browser. Enter the current six-digit code. If the code expires, use the new code; five incorrect attempts require a one-minute wait.
+
+If the browser cannot connect, check Local Network permission in Settings, confirm the address, and check that the Wi-Fi network allows devices to communicate. Guest networks, VPN configurations, and firewalls can block local connections.
+
+Files can be up to 2 GiB, subject to free space. If preview is unavailable, download the file and open it in another app. Do not use sensitive files on an untrusted network: HTTP is unencrypted.
+
+{{SUPPORT_CONTACT}}

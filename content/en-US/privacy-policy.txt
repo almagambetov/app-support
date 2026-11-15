@@ -1,0 +1,15 @@
+Privacy policy
+
+Airelay is provided by {{OWNER_NAME}}. Contact: {{SUPPORT_CONTACT}}. Effective date: {{EFFECTIVE_DATE}}.
+
+Airelay does not require an account. The app has no advertising or analytics SDKs, and the developer does not receive your transferred files or usage data through the app.
+
+Files and folder information are stored in Airelay on your device. The app shares only files received into its own storage, not your photo library, external Files-provider documents, or other apps’ storage. Theme and language preferences are stored on the device.
+
+When you enable sharing, paired browsers on your local network can upload, list, preview, download, and manage received files. HTTP traffic is not encrypted. Use a trusted network. The pairing code limits access; it does not encrypt traffic. A paired browser can access received files until sharing stops.
+
+Turning sharing off, locking the device, or leaving the app stops sharing. Completed files remain until you delete them or remove the app. Incomplete transfers are discarded; remnants from an interrupted process are cleaned at the next launch. iOS backups may include completed files according to your device settings.
+
+If you share a file through AirDrop or another app, the chosen service handles it under its own terms. If you contact support, you choose what information to send; do not include private files or pairing credentials. Information collected by a separately hosted support website must be disclosed by that website’s operator.
+
+For privacy questions or support, contact {{SUPPORT_CONTACT}}. This draft must be updated if the app’s data practices change.

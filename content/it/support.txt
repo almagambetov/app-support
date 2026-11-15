@@ -1,0 +1,9 @@
+Assistenza — Airelay
+
+Collega i dispositivi alla stessa rete Wi-Fi, tieni Airelay aperto e inserisci nel browser l’indirizzo mostrato. Digita il codice attuale a sei cifre. Se scade, usa quello nuovo; dopo cinque errori attendi un minuto.
+
+Se non riesci a collegarti, verifica il permesso Rete locale in Impostazioni, l’indirizzo e che la rete consenta la comunicazione tra dispositivi. Reti ospiti, VPN e firewall possono bloccarla.
+
+Ogni file può raggiungere 2 GiB, in base allo spazio libero. Se l’anteprima non è disponibile, scarica il file e aprilo con un’altra app. Non trasferire dati sensibili su reti non affidabili: HTTP non è crittografato.
+
+{{SUPPORT_CONTACT}}

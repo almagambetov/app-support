@@ -1,0 +1,9 @@
+Assistance — Airelay
+
+Connectez les appareils au même Wi-Fi, gardez Airelay ouvert et saisissez l’adresse affichée dans le navigateur. Entrez le code actuel à six chiffres. S’il expire, utilisez le nouveau ; après cinq erreurs, attendez une minute.
+
+En cas d’échec, vérifiez l’autorisation Réseau local dans Réglages, l’adresse et la communication entre appareils sur le Wi-Fi. Les réseaux invités, VPN et pare-feu peuvent bloquer l’accès.
+
+Chaque fichier peut atteindre 2 Gio, selon l’espace libre. Si l’aperçu est indisponible, téléchargez le fichier pour l’ouvrir dans une autre app. Ne transférez pas de données sensibles sur un réseau non fiable : HTTP n’est pas chiffré.
+
+{{SUPPORT_CONTACT}}

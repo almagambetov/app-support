@@ -1,0 +1,9 @@
+Soporte — Airelay
+
+Conecta los dispositivos al mismo Wi-Fi, mantén Airelay abierto e introduce su dirección en el navegador. Escribe el código actual de seis cifras. Si caduca, usa el nuevo; tras cinco errores espera un minuto.
+
+Si no conecta, revisa el permiso Red local en Ajustes, la dirección y que la red permita la comunicación entre dispositivos. Las redes de invitados, VPN y cortafuegos pueden bloquearla.
+
+Cada archivo puede tener hasta 2 GiB, según el espacio libre. Si no hay vista previa, descarga el archivo y ábrelo en otra app. No transfieras información sensible en redes no fiables: HTTP no está cifrado.
+
+{{SUPPORT_CONTACT}}

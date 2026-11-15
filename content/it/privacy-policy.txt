@@ -1,0 +1,15 @@
+Informativa sulla privacy
+
+Airelay è fornita da {{OWNER_NAME}}. Contatto: {{SUPPORT_CONTACT}}. Data di entrata in vigore: {{EFFECTIVE_DATE}}.
+
+Airelay non richiede un account. Non contiene pubblicità o SDK di analisi; lo sviluppatore non riceve i file trasferiti né i dati di utilizzo tramite l’app.
+
+File e informazioni sulle cartelle restano in Airelay sul dispositivo. Sono condivisi solo i file ricevuti nello spazio dell’app, non la libreria fotografica, i documenti di fornitori esterni in File o i dati di altre app. Lingua e tema sono salvati sul dispositivo.
+
+Con la condivisione attiva, i browser abbinati nella rete locale possono caricare, elencare, visualizzare, scaricare e gestire i file ricevuti. HTTP non è crittografato. Usa una rete affidabile. Il codice limita l’accesso, ma non cifra il traffico. Un browser abbinato mantiene l’accesso fino all’arresto della condivisione.
+
+Disattivare la condivisione, bloccare il dispositivo o uscire dall’app interrompe il servizio. I file completati restano finché non li elimini o rimuovi l’app. I trasferimenti incompleti vengono scartati; eventuali residui dopo una chiusura improvvisa vengono rimossi al successivo avvio. I backup iOS possono includere i file secondo le impostazioni del dispositivo.
+
+Se invii un file con AirDrop o un’altra app, il servizio scelto lo gestisce secondo le proprie condizioni. Quando contatti l’assistenza scegli tu quali dati inviare; non allegare file privati o codici di accesso. La raccolta dati di un sito di assistenza separato deve essere dichiarata dal suo gestore.
+
+Per privacy e assistenza: {{SUPPORT_CONTACT}}. Questa bozza deve essere aggiornata se cambiano le modalità di trattamento dei dati.

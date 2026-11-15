@@ -1,0 +1,71 @@
+"""Build static GitHub Pages documents with no client scripts or dependencies."""
+from pathlib import Path
+from html import escape
+import os
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / 'docs'
+OWNER = 'Akhan Almagambetov'
+EMAIL = 'texnically@gmail.com'
+DATE = '2026-11-15'
+# locale, native label, support title, home intro, support instructions,
+# privacy closing, email handling, host handling, privacy heading
+LANGS = {
+'en': ('en-US','English','App support', 'Apps by Akhan Almagambetov. Support and privacy information.', 'For help with any of my apps, email texnically@gmail.com. Include the app name, app version, device model, system version, and a description of the issue. Support is available in English, Russian, Italian, Ukrainian, French, Kazakh, and Spanish. Do not send private files, passwords, or pairing codes.', 'For privacy questions or support, contact texnically@gmail.com. This policy will be updated if Airelay’s data practices change.', 'If you email support, I receive your email address, message, and any attachments you choose to send. I use them to answer your request and keep relevant correspondence as needed for support or legal obligations. You may request deletion by email, subject to those obligations. Please omit sensitive information.', 'This website uses no analytics, advertising, tracking scripts, or cookies set by me. GitHub Pages hosts it and may process technical request data, including IP addresses, for hosting and security under the GitHub Privacy Statement. Your email provider also processes support email under its own terms.', 'Privacy policies'),
+'ru': ('ru','Русский','Поддержка приложений', 'Приложения Akhan Almagambetov. Поддержка и конфиденциальность.', 'По вопросам о любом моём приложении пишите на texnically@gmail.com. Укажите название и версию приложения, модель устройства, версию системы и описание проблемы. Поддержка доступна на русском, английском, итальянском, украинском, французском, казахском и испанском языках. Не отправляйте личные файлы, пароли и коды подключения.', 'Вопросы о конфиденциальности и поддержке: texnically@gmail.com. При изменении обработки данных в Airelay эта политика будет обновлена.', 'При обращении по электронной почте я получаю ваш адрес, сообщение и выбранные вами вложения. Они используются для ответа; необходимая переписка хранится для поддержки или выполнения правовых обязательств. Вы можете запросить удаление по электронной почте с учётом этих обязательств. Не включайте конфиденциальные сведения.', 'На этом сайте нет добавленных мной аналитики, рекламы, отслеживающих скриптов или файлов cookie. Сайт размещён на GitHub Pages; для работы и безопасности GitHub может обрабатывать технические данные запросов, включая IP-адреса, согласно своему заявлению о конфиденциальности. Почтовый провайдер также обрабатывает обращения по своим условиям.', 'Политики конфиденциальности'),
+'it': ('it','Italiano','Assistenza app', 'App di Akhan Almagambetov. Assistenza e informazioni sulla privacy.', 'Per assistenza su qualsiasi mia app scrivi a texnically@gmail.com. Indica nome e versione dell’app, modello del dispositivo, versione del sistema e descrizione del problema. L’assistenza è disponibile in italiano, inglese, russo, ucraino, francese, kazako e spagnolo. Non inviare file privati, password o codici di abbinamento.', 'Per privacy e assistenza: texnically@gmail.com. Questa informativa sarà aggiornata se cambiano le modalità di trattamento dei dati di Airelay.', 'Se contatti l’assistenza via email, ricevo il tuo indirizzo, il messaggio e gli allegati che scegli di inviare. Li uso per rispondere e conservo la corrispondenza pertinente per esigenze di assistenza o obblighi legali. Puoi richiederne la cancellazione via email, fatti salvi tali obblighi. Evita informazioni sensibili.', 'Questo sito non usa strumenti di analisi, pubblicità, script di tracciamento o cookie impostati da me. È ospitato da GitHub Pages, che può trattare dati tecnici delle richieste, inclusi gli indirizzi IP, per funzionamento e sicurezza secondo l’informativa privacy di GitHub. Anche il fornitore email tratta i messaggi secondo le proprie condizioni.', 'Informative sulla privacy'),
+'uk': ('uk','Українська','Підтримка програм', 'Програми Akhan Almagambetov. Підтримка та конфіденційність.', 'Щодо будь-якої моєї програми пишіть на texnically@gmail.com. Укажіть назву й версію програми, модель пристрою, версію системи та опис проблеми. Підтримка доступна українською, англійською, російською, італійською, французькою, казахською та іспанською. Не надсилайте приватні файли, паролі чи коди підключення.', 'Питання щодо конфіденційності та підтримки: texnically@gmail.com. Цю політику буде оновлено в разі зміни обробки даних у Airelay.', 'Коли ви пишете в підтримку, я отримую вашу електронну адресу, повідомлення й вибрані вами вкладення. Вони потрібні для відповіді; відповідне листування зберігається для підтримки або виконання правових зобов’язань. Ви можете запросити видалення електронною поштою з урахуванням цих зобов’язань. Не додавайте конфіденційні відомості.', 'На цьому сайті немає доданих мною аналітики, реклами, скриптів відстеження чи файлів cookie. Сайт розміщено на GitHub Pages; для роботи й безпеки GitHub може обробляти технічні дані запитів, зокрема IP-адреси, відповідно до своєї заяви про конфіденційність. Поштовий провайдер також обробляє листи за власними умовами.', 'Політики конфіденційності'),
+'fr': ('fr-FR','Français','Assistance applications', 'Applications d’Akhan Almagambetov. Assistance et confidentialité.', 'Pour toute question sur mes applications, écrivez à texnically@gmail.com. Précisez le nom et la version de l’app, le modèle de l’appareil, la version du système et le problème rencontré. L’assistance est disponible en français, anglais, russe, italien, ukrainien, kazakh et espagnol. N’envoyez aucun fichier privé, mot de passe ou code d’association.', 'Pour la confidentialité ou l’assistance : texnically@gmail.com. Cette politique sera mise à jour si les pratiques d’Airelay changent.', 'Si vous contactez l’assistance par email, je reçois votre adresse, votre message et les pièces jointes que vous choisissez d’envoyer. Je les utilise pour vous répondre et conserve la correspondance utile aux besoins d’assistance ou aux obligations légales. Vous pouvez demander sa suppression par email, sous réserve de ces obligations. Évitez les informations sensibles.', 'Ce site n’utilise aucun outil d’analyse, publicité, script de suivi ou cookie ajouté par moi. Il est hébergé par GitHub Pages, qui peut traiter des données techniques de requête, dont les adresses IP, pour son fonctionnement et sa sécurité selon la déclaration de confidentialité de GitHub. Votre fournisseur de messagerie traite également les emails selon ses propres conditions.', 'Politiques de confidentialité'),
+'kk': ('kk-KZ','Қазақша','Қолданбаларды қолдау', 'Akhan Almagambetov қолданбалары. Қолдау және құпиялық туралы ақпарат.', 'Кез келген қолданбам бойынша texnically@gmail.com мекенжайына жазыңыз. Қолданбаның атауы мен нұсқасын, құрылғы үлгісін, жүйе нұсқасын және мәселенің сипаттамасын көрсетіңіз. Қолдау қазақ, ағылшын, орыс, итальян, украин, француз және испан тілдерінде қолжетімді. Жеке файлдарды, құпиясөздерді немесе жұптастыру кодтарын жібермеңіз.', 'Құпиялық пен қолдау сұрақтары: texnically@gmail.com. Airelay деректерді өңдеу тәсілдерін өзгертсе, осы саясат жаңартылады.', 'Қолдауға хат жазсаңыз, мен электрондық пошта мекенжайыңызды, хабарламаңызды және өзіңіз таңдаған тіркемелерді аламын. Оларды жауап беру үшін пайдаланамын және қажетті хаттарды қолдау не заңды міндеттемелер үшін сақтаймын. Осы міндеттемелерді ескере отырып, электрондық пошта арқылы жоюды сұрай аласыз. Құпия ақпаратты қоспаңыз.', 'Бұл сайтта мен қосқан аналитика, жарнама, бақылау скрипттері немесе cookie файлдары жоқ. Сайт GitHub Pages қызметінде орналасқан; GitHub жұмыс пен қауіпсіздік үшін IP мекенжайларын қоса техникалық сұрау деректерін өз құпиялық мәлімдемесіне сай өңдеуі мүмкін. Пошта провайдері де хаттарды өз шарттарына сай өңдейді.', 'Құпиялық саясаттары'),
+'es': ('es-ES','Español','Soporte de aplicaciones', 'Aplicaciones de Akhan Almagambetov. Soporte e información de privacidad.', 'Para obtener ayuda con cualquiera de mis apps, escribe a texnically@gmail.com. Indica el nombre y la versión de la app, el modelo del dispositivo, la versión del sistema y una descripción del problema. El soporte está disponible en español, inglés, ruso, italiano, ucraniano, francés y kazajo. No envíes archivos privados, contraseñas ni códigos de emparejamiento.', 'Para consultas de privacidad o soporte: texnically@gmail.com. Esta política se actualizará si cambian las prácticas de datos de Airelay.', 'Si contactas por email, recibo tu dirección, mensaje y los archivos adjuntos que decidas enviar. Los utilizo para responder y conservo la correspondencia pertinente para el soporte o las obligaciones legales. Puedes solicitar su eliminación por email, con sujeción a dichas obligaciones. Evita incluir información sensible.', 'Este sitio no utiliza herramientas de análisis, publicidad, scripts de seguimiento ni cookies añadidos por mí. Está alojado en GitHub Pages, que puede tratar datos técnicos de las solicitudes, incluidas las direcciones IP, para su funcionamiento y seguridad según la declaración de privacidad de GitHub. Tu proveedor de correo también trata los mensajes conforme a sus condiciones.', 'Políticas de privacidad'),
+}
+
+def path(lang, page=''):
+    return ('' if lang == 'en' else lang + '/') + page
+
+def link(current, target):
+    return os.path.relpath(OUT / target / 'index.html', (OUT / current)) .replace('index.html', '') or './'
+
+def rich(text):
+    return escape(text).replace(EMAIL, f'<a href="mailto:{EMAIL}">{EMAIL}</a>')
+
+def paragraphs(text):
+    return '\n'.join('<p>' + rich(p.replace('\n',' ')) + '</p>' for p in text.split('\n\n') if p.strip())
+
+def render(lang, page, title, body):
+    current = path(lang,page)
+    langs = ' '.join(f'<a href="{link(current,path(k,page))}" lang="{k}" hreflang="{k}"'+ (' aria-current="page"' if k==lang else '') + f'>{escape(v[1])}</a>' for k,v in LANGS.items())
+    nav = f'<a href="{link(current,path(lang))}">{OWNER}</a> · <a href="{link(current,path(lang,"support/"))}">{LANGS[lang][2]}</a> · <a href="{link(current,path(lang,"privacy/"))}">{LANGS[lang][8]}</a>'
+    css = os.path.relpath(OUT/'style.css',OUT/current)
+    html = f'''<!doctype html>
+<html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>{escape(title)} — {OWNER}</title><link rel="stylesheet" href="{css}"></head>
+<body><header><nav>{nav}</nav><nav aria-label="Language">{langs}</nav></header><main><h1>{escape(title)}</h1>{body}</main><footer>{OWNER} · <a href="mailto:{EMAIL}">{EMAIL}</a></footer></body></html>'''
+    dest = OUT/current/'index.html'
+    dest.parent.mkdir(parents=True,exist_ok=True)
+    dest.write_text(html)
+
+OUT.mkdir(exist_ok=True)
+for lang, (locale,label,support,intro,instructions,closing,email,host,privacy) in LANGS.items():
+    raw = (ROOT/'content'/locale/'privacy-policy.txt').read_text().strip().split('\n\n')
+    title=raw.pop(0)
+    # Replace the draft's support/website paragraph and draft-only closing with final disclosures.
+    raw[-2] = raw[-2].split('. ')[0] + '.'
+    raw[-1] = closing
+    policy='\n\n'.join(raw).replace('{{OWNER_NAME}}',OWNER).replace('{{SUPPORT_CONTACT}}',EMAIL).replace('{{EFFECTIVE_DATE}}',DATE)
+    # Keep the full app-specific sharing explanation; email and website disclosures follow separately.
+    original=(ROOT/'content'/locale/'privacy-policy.txt').read_text().strip().split('\n\n')[-2]
+    # The first sentence ends after AirDrop/third-party handling in each provided translation.
+    first=original.split('. ')[0]+'.'
+    policy=policy.replace(raw[-2],first)
+    render(lang,'privacy/airelay/',title+' — Airelay',paragraphs(policy+'\n\n'+email+'\n\n'+host)+ '<p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</a></p>')
+    helptext=(ROOT/'content'/locale/'support.txt').read_text().strip().split('\n\n')
+    render(lang,'support/',support,paragraphs(instructions)+f'<h2>Airelay</h2>'+paragraphs('\n\n'.join(helptext[1:-1]))+f'<p><a href="{link(path(lang,"support/"),path(lang,"privacy/airelay/"))}">{escape(title)} — Airelay</a></p>'+paragraphs(email+'\n\n'+host)+'<p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</a></p>')
+    render(lang,'privacy/',privacy,f'<p><a href="{link(path(lang,"privacy/"),path(lang,"privacy/airelay/"))}">Airelay</a></p>'+paragraphs(host)+'<p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</a></p>')
+    render(lang,'',OWNER,paragraphs(intro)+f'<h2>Airelay</h2><p><a href="{link(path(lang),path(lang,"support/"))}">{escape(support)}</a> · <a href="{link(path(lang),path(lang,"privacy/airelay/"))}">{escape(title)}</a></p>')
+(OUT/'.nojekyll').touch()
+(OUT/'style.css').write_text('''
+:root{color-scheme:light dark;--bg:#fafafa;--fg:#202020;--muted:#555;--line:#ccc}
+@media(prefers-color-scheme:dark){:root{--bg:#141414;--fg:#eee;--muted:#bbb;--line:#444}}
+*{box-sizing:border-box}body{margin:0 auto;padding:24px;max-width:850px;background:var(--bg);color:var(--fg);font:17px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{border-bottom:1px solid var(--line);padding-bottom:20px}nav{display:flex;flex-wrap:wrap;gap:8px 16px;margin-bottom:12px}nav:last-child{font-size:14px;margin:0}a{color:inherit;text-underline-offset:3px;overflow-wrap:anywhere}a:hover,a[aria-current]{text-decoration-thickness:2px}a:focus-visible{outline:2px solid currentColor;outline-offset:4px}main{padding:20px 0}h1{font-size:clamp(25px,5vw,36px);line-height:1.25}h2{font-size:23px}p{margin:0 0 1.2em}footer{border-top:1px solid var(--line);padding:18px 0;color:var(--muted);font-size:14px}@media(max-width:480px){body{padding:18px}}
+'''.strip())
+print('Built 28 static pages in docs/')
