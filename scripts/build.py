@@ -52,11 +52,6 @@ for lang, (locale,label,support,intro,instructions,closing,email,host,privacy) i
     raw[-2] = raw[-2].split('. ')[0] + '.'
     raw[-1] = closing
     policy='\n\n'.join(raw).replace('{{OWNER_NAME}}',OWNER).replace('{{SUPPORT_CONTACT}}',EMAIL).replace('{{EFFECTIVE_DATE}}',DATE)
-    # Keep the full app-specific sharing explanation; email and website disclosures follow separately.
-    original=(ROOT/'content'/locale/'privacy-policy.txt').read_text().strip().split('\n\n')[-2]
-    # The first sentence ends after AirDrop/third-party handling in each provided translation.
-    first=original.split('. ')[0]+'.'
-    policy=policy.replace(raw[-2],first)
     render(lang,'privacy/airelay/',title+' — Airelay',paragraphs(policy+'\n\n'+email+'\n\n'+host)+ '<p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</a></p>')
     helptext=(ROOT/'content'/locale/'support.txt').read_text().strip().split('\n\n')
     render(lang,'support/',support,paragraphs(instructions)+f'<h2>Airelay</h2>'+paragraphs('\n\n'.join(helptext[1:-1]))+f'<p><a href="{link(path(lang,"support/"),path(lang,"privacy/airelay/"))}">{escape(title)} — Airelay</a></p>'+paragraphs(email+'\n\n'+host)+'<p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</a></p>')
