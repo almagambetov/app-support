@@ -8,11 +8,11 @@ The shared support page covers all apps; each app must have its own privacy poli
 
 In Settings → Pages, choose **Deploy from a branch**, **main**, **/docs**, then Save. Use HTTPS.
 
-- Support: https://almagambetov.github.io/app-support/support/
-- Airelay privacy: https://almagambetov.github.io/app-support/privacy/airelay/
-- Policy directory: https://almagambetov.github.io/app-support/privacy/
+- Support: https://nixie.tube/app-support/support/
+- Airelay privacy: https://nixie.tube/app-support/privacy/airelay/
+- Policy directory: https://nixie.tube/app-support/privacy/
 
-These URLs work only after Pages is enabled and deployment succeeds. The shared support URL may be used for all App Store listing languages. Language links open complete static translations; no JavaScript is required. Russian, Italian, Ukrainian, French, Kazakh, and Spanish paths start with /ru/, /it/, /uk/, /fr/, /kk/, and /es/ after /app-support/.
+The account’s existing user site uses nixie.tube, so GitHub Pages inherits that custom domain for project sites. These URLs work only after Pages is enabled and deployment succeeds. Confirm the live HTTPS links before use. The shared support URL may be used for all App Store listing languages. Language links open complete static translations; no JavaScript is required. Russian, Italian, Ukrainian, French, Kazakh, and Spanish paths start with /ru/, /it/, /uk/, /fr/, /kk/, and /es/ after /app-support/.
 
 ## Maintain
 
